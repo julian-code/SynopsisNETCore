@@ -6,5 +6,5 @@
 \contentsline {subsection}{\numberline {3.2} Choreography }{2}%
 \contentsline {subsection}{\numberline {3.3} Saga pattern }{2}%
 \contentsline {section}{\numberline {4} Versionering }{2}%
-\contentsline {subsection}{\numberline {4.1} Resiliens }{2}%
+\contentsline {subsection}{\numberline {4.1} Consumer-Driven Contracts }{2}%
 \contentsline {section}{\numberline {5} Eventual consistency }{2}%
