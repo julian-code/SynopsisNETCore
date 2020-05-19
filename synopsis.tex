@@ -110,25 +110,38 @@ Denne opgave vil fokusere på den koordinering der skal til for at Microservices
 Del spørgsmål
 
 \begin{itemize}
-  \item[1] Hvilke mønstre findes der til at koordinere Microservices?
+  \item[1] Hvad er SAGA-mønstret?
   \item[2] Hvordan kan man sikre autonome Microservices?
   \item[3] Hvad skal din Microservices tage højde for at opnå eventual consistency?
 \end{itemize}
 
 \section{ 1. delspørgsmål }
-Hvilke mønstre findes der til at koordinere Microservices?
 \subsection{ Saga pattern }
 Når der tales om koordineringen af Microservices menes der den interne kommunikation/dataudveksling der skal til for at services kan udføre en forretningsproces. Et eksempel på en forretningsproces kunne f.eks. være at lave en ordre der tilsidst afsendes og modtages af en kunde. I en traditionel arkitektur kunne man bruge ACID transaktioner, men når der er tale om flere services er det svært at lave isoleret transaktioner. En måde hvorpå man kan imødekomme dette er ved brug af distrubureret transaktioner, så som 2PC (two-phase commit). Denne løsning kan være tilstrækkelig, men den giver dog nogle ekstra problemer. Ideén med distrubureret transaktioner er at alle services der indgår enten committer transaktioner eller laver en rollback. Det betyder altså at du nu er direkte afhængig af, om alle services er klar til og modtage requestet, eller ej. Derfor vil negativ downtime for en service have effekt på alle andre services der indgår i den distribureret transaktion\cite{richardson2019microservices}. Dette bryder på autonom princippet bag Microservices, og der er nu en direkte afhængighed videre fra service til service.
 \newline
 
 \noindent
-For at imødekomme kommunikation der skal gå på tværs af services kan man her bruge et Saga pattern.
+For at imødekomme kommunikation der skal gå på tværs af services kan man her bruge et Saga pattern. Saga mønstret er et mønstre hvorpå man kan lave transaktioner på tværs af services. Der findes to typer af sager. Choreography baseret og orchestration baseret\cite{richardson2019microservices}.
 
+\subsection{ Orchestration saga }
 
-\cite{richardson2019microservices}
+\begin{figure}[h]
+\includegraphics[width=1\textwidth]{orchestrationsaga}
+  \caption{\cite[p.~91]{newman2015building}}
+\end{figure}
 
-\subsection{ Choreography saga }
-\subsection { Orchestration saga }
+\noindent
+For at forstå orchestration bruges oftest en analogi til den virkelige verden hvor man kigger på et orkester. I et orkester er der en person der orkestrerer orkestret, nemlig dirigenten. Dirigenten sørger for at alle i orkesteret rammer deres toner på de rigtige tidspunkt og aggregere alle instrumenters toner til at få leveret et stykke musik. Med denne analogi kan vi kigge på services som de enkelte instrumenter, og dirigenten som en Saga der sørger for at aggregere og præsentere data fra forskellige services. Et simpel eksempel kunne være en request/response hvor en klient beder om at få alle informationer om en kunde og kundens betalinger baseret på kundens id. Saga'en vil requeste kundeservicen der kan returnere detaljer om kunden og requeste betalingsservicen om alle betalinger oprettet af kunden. Saga'en vil så aggregere dette data og præsentere det i et response. En definition på en orkesteringssaga kunne være følgende.
+\newline
+
+\emph{Orchestration saga} - I en orkesterings baseret saga centraliserer man koordinations logikken i en enkelt service. Denne service står for at sende beskeder afsted til services der fortæller dem hvilke funktioner de skal udføre og eventuelt aggregere data til et response\cite{richardson2019microservices}.
+
+\subsection { Choreography saga }
+\begin{figure}[h]
+\includegraphics[width=1\textwidth]{cheographysaga}
+  \caption{\cite[p.~92]{newman2015building}}
+
+\end{figure}
 \section { 2. delspørgsmål }
 \subsection { Consumer-Driven Contracts }
 \section { 3. delspørgsmål }
