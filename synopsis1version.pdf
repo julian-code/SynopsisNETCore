@@ -10,11 +10,13 @@
 \usepackage{fancyhdr}
 \pagestyle{plain}
 \usepackage[nottoc,notlof,notlot]{tocbibind}
+\usepackage[titles,subfigure]{tocloft}
 \usepackage[scaled]{helvet}
 \renewcommand\familydefault{\sfdefault} 
 \usepackage[T1]{fontenc}
 
 \begin{document}
+
 \onehalfspacing
 \begin{titlepage}
 	\centering
@@ -34,7 +36,6 @@
 	{\large \today\par}
 
 \end{titlepage}
-\addtocontents{toc}{\protect\thispagestyle{empty}}
 \tableofcontents
 \newpage
 \clearpage
@@ -135,7 +136,6 @@ I et normal udvikling scenarie vil en provider have udviklet nogle endpoints med
 En af de store udfordringer ved brug af Microservices af dataudveksling da alle services har deres eget database skema. Det betyder at vi har flere transaktionelle grænser for vores services, og ikke en, som i en monolit. Derfor er man nød til at kigge på, hvordan dataen på et tidspunkt kan være konsistent på tværs af flere transaktionelle grænser. Dette kaldes eventual consistency - man accepterer faktummet om, at alle processer ikke arbejder med det nyeste data, men på et tidspunkt i processen vil komme til det\cite{newman2015building}.
 \newline
 
-\newpage
 \section{ Sammenfatning }
 Det overordnede spørgsmål lød således: \textbf{Hvordan opnår man en fornuftig koordinering af Microservices til at løse forretningsmæssigeopgaver?}
 \newline
@@ -153,6 +153,8 @@ For at opnå en fornuftig koordinering af services er det vigtigt at:
 \noindent
 Overstående liste af overvejelser giver følgende problemstillinger der kan drøftes:
 
+\newpage
+
 \section { Problemstillinger til drøftelse }
 \begin{itemize}
   \item[1] Hvornår skal man enten bruge orchestration eller choreography?
@@ -165,3 +167,4 @@ Overstående liste af overvejelser giver følgende problemstillinger der kan dr�
 \bibliography{bibliography}
 
 \end{document}
+
